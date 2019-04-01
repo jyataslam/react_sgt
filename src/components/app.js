@@ -21,6 +21,23 @@ class App extends Component {
         });
     }
 
+    deleteStudent = (id) => {
+        //must copy array so as not to mutate original
+        const studentsCopy = this.state.students.slice();
+
+        //findIndex method 
+        const index = studentsCopy.findIndex((student) => {
+            return student.id === id;
+        });
+
+        if(index >= 0){
+            studentsCopy.splice(index, 1);
+            this.setState({
+                students: [...studentsCopy]
+            });
+        }
+    }
+
     componentDidMount(){
         // Render has been run, now this will run
         // Call getStudentData to get the data from the server
@@ -41,7 +58,7 @@ class App extends Component {
             <div>
                 <h1 className="center">React SGT</h1>
                 <div className="row">
-                <StudentTable col="s12 m8" list={this.state.students}/>
+                <StudentTable col="s12 m8" list={this.state.students} delete={this.deleteStudent}/>
                 <AddStudent col="s12 m4" add={this.addStudent} />
                 </div>
             </div>
